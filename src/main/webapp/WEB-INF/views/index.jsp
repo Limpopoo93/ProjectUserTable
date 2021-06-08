@@ -22,10 +22,10 @@
         <th>Status</th>
     </tr>
     <c:forEach items="${users}" var="user">
-    <form name="select_all">
+    <form name="select_all" action="${pageContext.request.contextPath}settingUser" method="post">
         <tr>
             <td>
-                <input type="checkbox" class="custom-checkbox" id="happy" name="list" value="yes">
+                <input type="checkbox" class="custom-checkbox" id="happy" name="list" value="${user.getId()}">
             </td>
 
             <td>${user.getId()}</td>
@@ -35,48 +35,49 @@
             <td>${user.getUpdated()}</td>
             <td>${user.getStatus()}</td>
         </tr>
-    </c:forEach>
+        </c:forEach>
+        <td></td>
+        <td>
+            <input type="button" class="login-submit" value="Select all" onclick="check(this.form.list, 1)">
+        </td>
+        <td>
+            <input type="button" class="login-submit" value="Remove all" onclick="check(this.form.list, 0)">
+        </td>
     <td>
-    <input type="button" value="Выделить все" onclick="check(this.form.list, 1)">
-    <input type="button" value="Снять выделение" onclick="check(this.form.list, 0)">
+
+            <button class="login-submit" name="param" value="block"><i class="fa fa-lock">Block</i>
+            </button>
+
+    </td>
+    <td>
+
+            <button class="login-submit" name="param" value="unBlock"><i class="fa fa-lock">UnBlock</i>
+            </button>
+
+    </td>
+    <td>
+
+            <button class="login-submit" name="param" value="delete"><i class="fa fa-lock">Delete</i>
+            </button>
     </td>
     </form>
-    <td>
-        <form action="<c:url value="userUnBlockLetterId/${user.getId()}"/>" method="get">
-            <button class="login-submit" value="block"><i class="fa fa-lock">Block</i>
-            </button>
-        </form>
-    </td>
-    <td>
-        <form action="<c:url value="deleteLetter/${user.getId()}"/>" method="get">
-            <button class="login-submit" value="unBlock"><i class="fa fa-lock">UnBlock</i>
-            </button>
-        </form>
-    </td>
-    <td>
-        <form action="<c:url value="deleteLetter/${user.getId()}"/>" method="get">
-            <button class="login-submit" value="delete"><i class="fa fa-lock">Delete</i>
-            </button>
-        </form>
-    </td>
 </table>
 </body>
 </html>
 <style type="text/css">
-    /* для элемента input c type="radio" */
     .custom-radio {
         position: absolute;
         z-index: -1;
         opacity: 0;
     }
-    /* для элемента label связанного с .custom-radio */
-    .custom-radio+label {
+
+    .custom-radio + label {
         display: inline-flex;
         align-items: center;
         user-select: none;
     }
-    /* создание в label псевдоэлемента  before со следующими стилями */
-    .custom-radio+label::before {
+
+    .custom-radio + label::before {
         content: '';
         display: inline-block;
         width: 1em;
@@ -90,37 +91,33 @@
         background-position: center center;
         background-size: 50% 50%;
     }
-    /* стили при наведении курсора на радио */
-    .custom-radio:not(:disabled):not(:checked)+label:hover::before {
+
+    .custom-radio:not(:disabled):not(:checked) + label:hover::before {
         border-color: #b3d7ff;
     }
-    /* стили для активной радиокнопки (при нажатии на неё) */
-    .custom-radio:not(:disabled):active+label::before {
+
+    .custom-radio:not(:disabled):active + label::before {
         background-color: #b3d7ff;
         border-color: #b3d7ff;
     }
-    /* стили для радиокнопки, находящейся в фокусе */
-    .custom-radio:focus+label::before {
+
+    .custom-radio:focus + label::before {
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
-    /* стили для радиокнопки, находящейся в фокусе и не находящейся в состоянии checked */
-    .custom-radio:focus:not(:checked)+label::before {
+
+    .custom-radio:focus:not(:checked) + label::before {
         border-color: #80bdff;
     }
-    /* стили для радиокнопки, находящейся в состоянии checked */
-    .custom-radio:checked+label::before {
+
+    .custom-radio:checked + label::before {
         border-color: #0b76ef;
         background-color: #0b76ef;
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
     }
-    /* стили для радиокнопки, находящейся в состоянии disabled */
-    .custom-radio:disabled+label::before {
+
+    .custom-radio:disabled + label::before {
         background-color: #e9ecef;
     }
-
-
-
-
 
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -224,7 +221,10 @@
 </style>
 <script type="text/javascript">
     function check(field, flag) {
-        if (flag==1) { for (i=0; i<field.length; i++) field[i].checked = true; }
-        else { for (i=0; i<field.length; i++) field[i].checked = false; }
+        if (flag == 1) {
+            for (i = 0; i < field.length; i++) field[i].checked = true;
+        } else {
+            for (i = 0; i < field.length; i++) field[i].checked = false;
+        }
     }
 </script>

@@ -5,16 +5,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import project.table.service.RoleService;
 import project.table.service.UserService;
-import project.table.view.CheckBox;
 import project.table.view.Role;
 import project.table.view.Status;
 import project.table.view.User;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -29,13 +29,13 @@ public class UserController {
         return "main";
     }
 
-    @GetMapping("/registration")
+    @GetMapping("registration")
     public String registration(User user) {
         return "registrationUser";
     }
 
 
-    @GetMapping("/comeIn")
+    @GetMapping("comeIn")
     public String comeIn(User user) {
         return "comeInUser";
     }
@@ -56,13 +56,11 @@ public class UserController {
         userService.save(user);
         session.setAttribute("user", user);
         List<User> users = userService.findAll();
-        List<CheckBox> checkBoxes = Collections.singletonList(new CheckBox());
-        model.addAttribute("checkBoxes", checkBoxes);
         model.addAttribute("users", users);
         return "index";
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public String login(User user, Model model, HttpSession session) {
         User userSearch = userService.findByUsername(user.getUsername());
         if (userSearch == null) {
@@ -71,14 +69,47 @@ public class UserController {
         if (!userSearch.getPassword().equals(user.getPassword())) {
             return "comeInUser";
         }
+        if (userSearch.getStatus().equals(Status.BLOCK) || userSearch.getStatus().equals(Status.DELETE)) {
+            return "comeInUser";
+        }
         userSearch.setUpdated(new Date());
         userService.saveAndFlush(userSearch);
         List<User> users = userService.findAll();
-        List<CheckBox> checkBoxes = Collections.singletonList(new CheckBox());
-        session.setAttribute("user", user);
+        session.setAttribute("userSearch", userSearch);
         model.addAttribute("users", users);
         return "index";
     }
 
-
+    @PostMapping("settingUser")
+    public String settingUser(@RequestParam String param, @RequestParam String list, HttpSession session, Model model) {
+        int[] numArr = Arrays.stream(list.split(",")).mapToInt(Integer::parseInt).toArray();
+        String status = "";
+        if (param.equals("block")) {
+            status = "BLOCK";
+        }
+        if (param.equals("unBlock")) {
+            status = "UNBLOCK";
+        }
+        if (param.equals("delete")) {
+            status = "DELETE";
+        }
+        Boolean check = false;
+        User userSession = (User) session.getAttribute("userSearch");
+        for (int i = 0; i < numArr.length; i++) {
+            Long id = (long) numArr[i];
+            User user = userService.findById(id);
+            if (userSession.getId().equals(user.getId())) {
+                check = true;
+            }
+            user.setStatus(Status.valueOf(status));
+            userService.saveAndFlush(user);
+        }
+        if (check) {
+            session.invalidate();
+            return "main";
+        }
+        List<User> users = userService.findAll();
+        model.addAttribute("users", users);
+        return "index";
+    }
 }
