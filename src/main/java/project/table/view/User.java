@@ -13,18 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "m_user")
+@Table(name = "M_USER")
 public class User extends BaseEntity {
-    @Column(name = "user_name")
+    @Column(name = "USER_NAME")
     private String username;
 
-    @Column(name = "first_name")
+    @Column(name = "FIRST_NAME")
     private String firstName;
 
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

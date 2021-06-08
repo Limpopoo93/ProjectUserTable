@@ -9,8 +9,8 @@
 <body>
 <nav class="container">
     <ul>
-        <li class="nav-item"><a href="${pageContext.request.contextPath}userComeIn" class="nav-link">Come In</a></li>
-        <li class="nav-item"><a href="${pageContext.request.contextPath}userRegistration"
+        <li class="nav-item"><a href="${pageContext.request.contextPath}comeIn" class="nav-link">Come In</a></li>
+        <li class="nav-item"><a href="${pageContext.request.contextPath}registration"
                                 class="nav-link">Registration</a></li>
     </ul>
 </nav>

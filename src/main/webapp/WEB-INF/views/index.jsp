@@ -7,53 +7,6 @@
     <meta charset="utf-8">
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>Check</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Date created</th>
-        <th>Date active</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${letters}" var="letter">
-        <tr>
-            <td>
-                <li class="tg-list-item">
-                    <input class="tgl tgl-ios" id="cb2" type="checkbox"/>
-                    <label class="tgl-btn" for="cb2"></label>
-                </li>
-            </td>
-            <td>${letter.authenticate.getName()}</td>
-            <td>${letter.authenticate.getEmail()}</td>
-            <td>${letter.authenticate.getDateCreated()}</td>
-            <td>${letter.getActive()}</td>
-            <td>${letter.getStatus()}</td>
-        </tr>
-    </c:forEach>
-    </tbody>
-    <td>
-        <form action="<c:url value="userUnBlockLetterId/${letter.authenticate.getId()}"/>" method="get">
-            <button class="login-submit"><i class="fa fa-lock">Block</i>
-            </button>
-        </form>
-    </td>
-    <td>
-        <form action="<c:url value="deleteLetter/${letter.getId()}"/>" method="get">
-            <button class="login-submit"><i class="fa fa-lock">UnBlock</i>
-            </button>
-        </form>
-    </td>
-    <td>
-        <form action="<c:url value="deleteLetter/${letter.getId()}"/>" method="get">
-            <button class="login-submit"><i class="fa fa-lock">Delete</i>
-            </button>
-        </form>
-    </td>
-</table>
 
 <table class="table_col">
     <colgroup>
@@ -61,162 +14,112 @@
     </colgroup>
     <tr>
         <th>Check</th>
+        <th>Id</th>
         <th>Name</th>
         <th>Email</th>
         <th>Date created</th>
         <th>Date active</th>
         <th>Status</th>
     </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+    <c:forEach items="${users}" var="user">
+    <form name="select_all">
+        <tr>
+            <td>
+                <input type="checkbox" class="custom-checkbox" id="happy" name="list" value="yes">
+            </td>
+
+            <td>${user.getId()}</td>
+            <td>${user.getFirstName()}</td>
+            <td>${user.getEmail()}</td>
+            <td>${user.getCreated()}</td>
+            <td>${user.getUpdated()}</td>
+            <td>${user.getStatus()}</td>
+        </tr>
+    </c:forEach>
+    <td>
+    <input type="button" value="Выделить все" onclick="check(this.form.list, 1)">
+    <input type="button" value="Снять выделение" onclick="check(this.form.list, 0)">
+    </td>
+    </form>
+    <td>
+        <form action="<c:url value="userUnBlockLetterId/${user.getId()}"/>" method="get">
+            <button class="login-submit" value="block"><i class="fa fa-lock">Block</i>
+            </button>
+        </form>
+    </td>
+    <td>
+        <form action="<c:url value="deleteLetter/${user.getId()}"/>" method="get">
+            <button class="login-submit" value="unBlock"><i class="fa fa-lock">UnBlock</i>
+            </button>
+        </form>
+    </td>
+    <td>
+        <form action="<c:url value="deleteLetter/${user.getId()}"/>" method="get">
+            <button class="login-submit" value="delete"><i class="fa fa-lock">Delete</i>
+            </button>
+        </form>
+    </td>
 </table>
 </body>
 </html>
 <style type="text/css">
-    ul,
-    li {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+    /* для элемента input c type="radio" */
+    .custom-radio {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
     }
-
-    .tg-list {
-        text-align: center;
-        display: -webkit-box;
-        display: flex;
-        -webkit-box-align: center;
+    /* для элемента label связанного с .custom-radio */
+    .custom-radio+label {
+        display: inline-flex;
         align-items: center;
-        flex-wrap: wrap;
-        -webkit-box-pack: center;
-        justify-content: center;
-    }
-
-    .tg-list-item {
-        margin: 0 2em;
-    }
-
-    h2 {
-        color: #777;
-    }
-
-    h4 {
-        color: #999;
-    }
-
-    .tgl {
-        display: none;
-    }
-
-    .tgl,
-    .tgl:after,
-    .tgl:before,
-    .tgl *,
-    .tgl *:after,
-    .tgl *:before,
-    .tgl + .tgl-btn {
-        box-sizing: border-box;
-    }
-
-    .tgl::-moz-selection,
-    .tgl:after::-moz-selection,
-    .tgl:before::-moz-selection,
-    .tgl *::-moz-selection,
-    .tgl *:after::-moz-selection,
-    .tgl *:before::-moz-selection,
-    .tgl + .tgl-btn::-moz-selection {
-        background: none;
-    }
-
-    .tgl::selection,
-    .tgl:after::selection,
-    .tgl:before::selection,
-    .tgl *::selection,
-    .tgl *:after::selection,
-    .tgl *:before::selection,
-    .tgl + .tgl-btn::selection {
-        background: none;
-    }
-
-    .tgl + .tgl-btn {
-        outline: 0;
-        display: block;
-        width: 4em;
-        height: 2em;
-        position: relative;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
         user-select: none;
     }
-
-    .tgl + .tgl-btn:after,
-    .tgl + .tgl-btn:before {
-        position: relative;
-        display: block;
-        content: "";
-        width: 50%;
-        height: 100%;
+    /* создание в label псевдоэлемента  before со следующими стилями */
+    .custom-radio+label::before {
+        content: '';
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        flex-shrink: 0;
+        flex-grow: 0;
+        border: 1px solid #adb5bd;
+        border-radius: 50%;
+        margin-right: 0.5em;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 50% 50%;
+    }
+    /* стили при наведении курсора на радио */
+    .custom-radio:not(:disabled):not(:checked)+label:hover::before {
+        border-color: #b3d7ff;
+    }
+    /* стили для активной радиокнопки (при нажатии на неё) */
+    .custom-radio:not(:disabled):active+label::before {
+        background-color: #b3d7ff;
+        border-color: #b3d7ff;
+    }
+    /* стили для радиокнопки, находящейся в фокусе */
+    .custom-radio:focus+label::before {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    /* стили для радиокнопки, находящейся в фокусе и не находящейся в состоянии checked */
+    .custom-radio:focus:not(:checked)+label::before {
+        border-color: #80bdff;
+    }
+    /* стили для радиокнопки, находящейся в состоянии checked */
+    .custom-radio:checked+label::before {
+        border-color: #0b76ef;
+        background-color: #0b76ef;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+    }
+    /* стили для радиокнопки, находящейся в состоянии disabled */
+    .custom-radio:disabled+label::before {
+        background-color: #e9ecef;
     }
 
-    .tgl + .tgl-btn:after {
-        left: 0;
-    }
 
-    .tgl + .tgl-btn:before {
-        display: none;
-    }
 
-    .tgl:checked + .tgl-btn:after {
-        left: 50%;
-    }
-
-    .tgl-ios + .tgl-btn {
-        background: #fbfbfb;
-        border-radius: 2em;
-        padding: 2px;
-        -webkit-transition: all .4s ease;
-        transition: all .4s ease;
-        border: 1px solid #e8eae9;
-    }
-
-    .tgl-ios + .tgl-btn:after {
-        border-radius: 2em;
-        background: #fbfbfb;
-        -webkit-transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), padding 0.3s ease, margin 0.3s ease;
-        transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), padding 0.3s ease, margin 0.3s ease;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(0, 0, 0, 0.08);
-    }
-
-    .tgl-ios + .tgl-btn:hover:after {
-        will-change: padding;
-    }
-
-    .tgl-ios + .tgl-btn:active {
-        box-shadow: inset 0 0 0 2em #e8eae9;
-    }
-
-    .tgl-ios + .tgl-btn:active:after {
-        padding-right: .8em;
-    }
-
-    .tgl-ios:checked + .tgl-btn {
-        background: #86d993;
-    }
-
-    .tgl-ios:checked + .tgl-btn:active {
-        box-shadow: none;
-    }
-
-    .tgl-ios:checked + .tgl-btn:active:after {
-        margin-left: -.8em;
-    }
 
 
     html, body, div, span, applet, object, iframe,
@@ -319,3 +222,9 @@
         color: #8b8e91;
     }
 </style>
+<script type="text/javascript">
+    function check(field, flag) {
+        if (flag==1) { for (i=0; i<field.length; i++) field[i].checked = true; }
+        else { for (i=0; i<field.length; i++) field[i].checked = false; }
+    }
+</script>

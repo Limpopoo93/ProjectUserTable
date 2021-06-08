@@ -1,6 +1,7 @@
 package project.table.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.table.repository.UserRepository;
 import project.table.service.UserService;
@@ -12,7 +13,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     @Override
@@ -34,5 +36,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveAndFlush(User user) {
         return userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public User findByUsername(String login) {
+        return userRepository.findByUsername(login);
     }
 }

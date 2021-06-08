@@ -10,7 +10,7 @@
 </head>
 <body>
 <%--@elvariable id="user" type="functional.user.table.view.User"--%>
-<form:form class="login" action="${pageContext.request.contextPath}userRegistration"
+<form:form class="login" action="${pageContext.request.contextPath}login"
            modelAttribute="user" method="post">
     <h1>Come in</h1>
     <div class="form">

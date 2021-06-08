@@ -12,4 +12,6 @@ public interface UserService {
     User findById(Long id);
 
     User saveAndFlush(User user);
+
+    User findByUsername(String login);
 }
