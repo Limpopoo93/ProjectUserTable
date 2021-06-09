@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import project.table.exeption.EntityNotFoundException;
 import project.table.security.JwtUserDetailsService;
 import project.table.service.RoleService;
 import project.table.service.UserService;
@@ -15,10 +17,13 @@ import project.table.view.Status;
 import project.table.view.User;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import static project.table.exeption.ErrorConstant.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,10 +48,13 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String save(User user, Model model, HttpSession session) {
+    public String save(@Valid User user, BindingResult bindingResult, Model model, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return "registrationUser";
+        }
         User userSearch = userService.findByUsername(user.getUsername());
         if (userSearch != null) {
-            return "registrationUser";
+            throw new EntityNotFoundException(USER_BUSY);
         }
         Role roleUser = roleService.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
@@ -63,16 +71,19 @@ public class UserController {
     }
 
     @PostMapping("/comeInUser")
-    public String login(User user, Model model, HttpSession session) {
+    public String login(@Valid User user, BindingResult bindingResult, Model model, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return "comeInUser";
+        }
         User userSearch = userService.findByUsername(user.getUsername());
         if (userSearch == null) {
-            return "comeInUser";
+            throw new EntityNotFoundException(USER_EMPTY);
         }
         if (!userSearch.getPassword().equals(user.getPassword())) {
-            return "comeInUser";
+            throw new EntityNotFoundException(LOGIN_PASSWORD_NOT_WALID);
         }
         if (userSearch.getStatus().equals(Status.BLOCK) || userSearch.getStatus().equals(Status.DELETE)) {
-            return "comeInUser";
+            throw new EntityNotFoundException(ERROR);
         }
         userSearch.setUpdated(new Date());
         userService.saveAndFlush(userSearch);

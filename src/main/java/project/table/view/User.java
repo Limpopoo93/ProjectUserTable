@@ -8,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,15 +21,20 @@ import java.util.List;
 @Table(name = "m_user")
 public class User extends BaseEntity{
     @Column(name = "user_name")
+    @Size(min = 1, message = "email not valid")
     private String username;
 
     @Column(name = "first_name")
+    @Size(min = 1, message = "name not valid")
     private String firstName;
 
     @Column(name = "email")
+    @Size(min = 1, message = "email not valid")
+    @Email(message = "not valid for email")
     private String email;
 
     @Column(name = "password")
+    @Size(min = 1, message = "password not valid")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
