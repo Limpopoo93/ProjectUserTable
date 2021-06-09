@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "m_role")
-public class Role extends BaseEntity {
+public class Role extends BaseEntity{
     @Column(name = "role_name")
     private String name;
 
@@ -27,4 +28,5 @@ public class Role extends BaseEntity {
                 "id: " + super.getId() + ", " +
                 "name: " + name + "}";
     }
+
 }

@@ -1,11 +1,13 @@
 package project.table.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import project.table.security.JwtUserDetailsService;
 import project.table.service.RoleService;
 import project.table.service.UserService;
 import project.table.view.Role;
@@ -23,24 +25,24 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final RoleService roleService;
+    private final JwtUserDetailsService jwtUserDetailsService;
 
     @GetMapping("/")
     public String main(Model model) {
         return "main";
     }
 
-    @GetMapping("registration")
+    @GetMapping("/registration")
     public String registration(User user) {
         return "registrationUser";
     }
 
-
-    @GetMapping("comeIn")
+    @GetMapping("/comeIn")
     public String comeIn(User user) {
         return "comeInUser";
     }
 
-    @PostMapping("save")
+    @PostMapping("/registration")
     public String save(User user, Model model, HttpSession session) {
         User userSearch = userService.findByUsername(user.getUsername());
         if (userSearch != null) {
@@ -60,7 +62,7 @@ public class UserController {
         return "index";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/comeInUser")
     public String login(User user, Model model, HttpSession session) {
         User userSearch = userService.findByUsername(user.getUsername());
         if (userSearch == null) {
@@ -74,13 +76,15 @@ public class UserController {
         }
         userSearch.setUpdated(new Date());
         userService.saveAndFlush(userSearch);
+        UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(user.getUsername());
         List<User> users = userService.findAll();
         session.setAttribute("userSearch", userSearch);
+        model.addAttribute("userDetails", userDetails);
         model.addAttribute("users", users);
         return "index";
     }
 
-    @PostMapping("settingUser")
+    @PostMapping("/settingUser")
     public String settingUser(@RequestParam String param, @RequestParam String list, HttpSession session, Model model) {
         int[] numArr = Arrays.stream(list.split(",")).mapToInt(Integer::parseInt).toArray();
         String status = "";
