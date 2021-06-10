@@ -1,9 +1,13 @@
+
 spring:
   datasource:
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:1234}
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/userTable}
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/userTable
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+  rsocket:
+    server:
+      port: ${PORT:5000}

@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "server.spring.profiles.active",
-      "type": "java.lang.String",
-      "description": "Description for server.spring.profiles.active."
-  }
-] }

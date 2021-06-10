@@ -8,3 +8,6 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+  rsocket:
+    server:
+      port: ${PORT:5000}

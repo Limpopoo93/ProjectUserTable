@@ -31,9 +31,6 @@
           <element id="library" level="project" name="Maven: jakarta.validation:jakarta.validation-api:2.0.2" />
           <element id="library" level="project" name="Maven: org.hibernate.validator:hibernate-validator:6.0.18.Final" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-devtools:2.2.5.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:2.2.5.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.2.10" />
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.20" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.8.1" />
@@ -113,6 +110,9 @@
           <element id="library" level="project" name="Maven: org.webjars.npm:angular__http:2.4.10" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.10.2" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.10.2" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-devtools:2.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:2.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.2.5.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
