@@ -28,7 +28,6 @@
         <json>0.9.1</json>
         <jasper>9.0.31</jasper>
         <commons>3.8.1</commons>
-        <jsonwebtoken.version>0.8.0</jsonwebtoken.version>
     </properties>
 
     <dependencies>
