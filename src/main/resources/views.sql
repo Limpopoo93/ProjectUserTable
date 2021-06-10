@@ -1,0 +1,11 @@
+Insert Into m_role(role_name, created, updated, status) VALUES ('ROLE_USER','2021-06-08','2021-06-08','UNBLOCK');
+Insert Into m_user(user_name, password, email, created, updated, first_name, status) values ('user', '1234', 'user@mail.ru', '2021-06-08', '2021-06-08', 'Alex', 'UNBLOCK');
+Insert Into m_user(user_name, password, email, created, updated, first_name, status) values ('user1', '1234', 'user1@mail.ru', '2021-06-08', '2021-06-08', 'Alex1', 'UNBLOCK');
+Insert Into m_user(user_name, password, email, created, updated, first_name, status) values ('user2', '1234', 'user2@mail.ru', '2021-06-08', '2021-06-08', 'Alex2', 'UNBLOCK');
+Insert Into m_user(user_name, password, email, created, updated, first_name, status) values ('user3', '1234', 'user3@mail.ru', '2021-06-08', '2021-06-08', 'Alex3', 'UNBLOCK');
+Insert Into m_user(user_name, password, email, created, updated, first_name, status) values ('user4', '1234', 'user4@mail.ru', '2021-06-08', '2021-06-08', 'Alex4', 'UNBLOCK');
+insert into m_user_role(id_role, id_user) VALUES (1, 1);
+insert into m_user_role(id_role, id_user) VALUES (1, 2);
+insert into m_user_role(id_role, id_user) VALUES (1, 3);
+insert into m_user_role(id_role, id_user) VALUES (1, 4);
+insert into m_user_role(id_role, id_user) VALUES (1, 5);
