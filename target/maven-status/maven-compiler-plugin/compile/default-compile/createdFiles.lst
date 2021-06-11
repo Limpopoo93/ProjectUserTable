@@ -7,6 +7,7 @@ project\table\view\CheckBox.class
 project\table\view\Status.class
 project\table\security\JwtUserDetailsService.class
 project\table\service\impl\UserServiceImpl.class
+project\table\controller\DatabaseConfig.class
 project\table\repository\RoleRepository.class
 project\table\view\User.class
 project\table\exeption\DefaultExceptionHandler.class
