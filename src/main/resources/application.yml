@@ -1,9 +1,16 @@
 
 spring:
   datasource:
-    username: postgres
-    password: 1234
-    url: jdbc:postgresql://localhost:5432/userTable
+    username: qpjzglkackgpxd
+    password: 4e73d3907c81d596e8a5ebe0d55d465b56bfa42596e4b1cd2bc9b397c8897332
+    url: jdbc:postgresql://ec2-54-72-155-238.eu-west-1.compute.amazonaws.com:5432/dddg58o6kj31go
+    tomcat:
+      max-active: 10
+      max-idle: 5
+      min-idle: 2
+      initial-size: 5
+      remove-abandoned: true
+
   mvc:
     view:
       prefix: /WEB-INF/views/
